@@ -8,7 +8,12 @@ $(document).ready(function() {
             url:"consulta.php",
             type:"post"
             
-        },"columns": [
+        },
+        dom: "<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>><t><ip>",
+        buttons: [
+            { extend: 'csv', className: 'btn btn-primary' }, 
+            { extend: 'excel', className: 'btn btn-success' }
+        ],"columns": [
             { "orderable": false, "targets": 0 },
             { "orderable": true, "targets": 1 },
             { "orderable": false, "targets": 2 },
