@@ -16,51 +16,59 @@ if (mysqli_num_rows($verificar_cambio_contrasena) >0){
    
 ?>
 <html>
-    <head>
+<head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cambiar contraseña</title>
-        <link rel="icon" href="../assets/img/icono.png">
-        <link href="../assets/plugins/bootstrap/bootstrap.css" rel="stylesheet" />
-        <link href="../assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-        <link href="../assets/css/style.css" rel="stylesheet" />
-        <link href="../assets/css/main-style.css" rel="stylesheet" />
-    </head>
+        <?php
+            include '../partes/link_head.php';
+        ?>
+</head>
 
-    <body class="body-Login-back" background="../assets/img/9.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4 text-center logo-margin ">
-                    <img style="width:300px; height:90px; " src="../assets/img/logo_blanco.png" />
-                </div>
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="login-panel panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Cambiar contraseña</h3>
-                        </div>
-                        <div class="panel-body">
-                            <form role="form" action="procesoModificarContrasena.php" method="post">
-                                <fieldset>
-                                    <div class="form-group">
-                                        <input class="form-control" placeholder="contraseña nueva" name="contrasena" type="password" autofocus required>
-                                        <input name="correo" type="hidden" value="<?php echo $correo; ?>" >
-                                        <input name="token" type="hidden" value="<?php echo $token; ?>" >
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" placeholder="repita la contraseña nueva" name="contrasena2" type="password" value="" required>
-                                    </div>
+<body class="body-Login-back" background="../assets/img/9.jpg">
+    
+    <div class="container pt-4">
+        <div class="row pt-4">
+            <div class="col-sm-4 offset-sm-1 col-4 offset-1 col-md-4 offset-md-4">
+                <!-- <div class="text-center"> -->
 
-                                    <button class="btn btn-lg btn-success btn-block">cambiar</button>
-                                    <p></p>
-                                    
-                                </fieldset>
-                            </form>
-                        </div>
+                    <img class="img-fluid" style="max-width:300px; height:90px; " src="../assets/img/logo_blanco.png" />
+                <!-- </div> -->
+                    
+                
+            </div>
+        </div>
+        <div class="row justify-content-md-center pt-5 pb-1">
+            
+        <div class="col-md-6">
+
+            <div class="card">
+
+                    <div class="card-header">
+                        <h3 class="card-title">Cambiar contraseña</h3>
+                    </div>
+                    <div class="card-body">
+                        <form role="form" action="procesoModificarContrasena.php" method="post">
+                           
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="contraseña nueva" name="contrasena" type="password" autofocus required>
+                                    <input name="correo" type="hidden" value="<?php echo $correo; ?>" >
+                                    <input name="token" type="hidden" value="<?php echo $token; ?>" >
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="repita la contraseña nueva" name="contrasena2" type="password" value="" required>
+                                </div>
+
+                                <button class="btn btn-lg btn-success btn-block">cambiar</button>
+                                <p></p>
+                        </form>
                     </div>
                 </div>
             </div>
+
         </div>
-    </body>
+    </div>
+</body>
 </html>
 <?php
 }else{

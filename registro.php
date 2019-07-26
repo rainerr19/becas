@@ -21,29 +21,33 @@ $formatos=array('.png','.jpg','.jpeg');
 $foto = $_FILES["imagen"]["name"];    
 $ruta = $_FILES["imagen"]["tmp_name"];
 // $root_url
-$destino = "assets/fotos_perfil/".$foto;
-$fotoFinal = $genFoto.$foto;
-$dir = substr($foto,strrpos($foto,"."));
-if(in_array($dir,$formatos)){
-    if($destino == "assets/fotos_perfil/"){
-        $destino = "assets/fotos_perfil/no_avatar.jpg";
+if($foto != ""){
+
+    $destino = "assets/fotos_perfil/".$foto;
+    $dir = substr($foto,strrpos($foto,"."));
+    if(in_array($dir,$formatos)){
+       
+            $genFoto = md5(uniqid(mt_rand(), false));
+            $fotoFinal = $genFoto.$foto;
+            $destino = "assets/fotos_perfil/".$fotoFinal;
+            copy($ruta,$destino);
+    
     }else{
-        $genFoto = md5(uniqid(mt_rand(), false));
-        $destino = "assets/fotos_perfil/".$fotoFinal;
-        copy($ruta,$destino);
+        echo '<script>
+                alert ("Formato de archovo NO valido.");
+                window.history.go(-1);
+                </script>';
+                exit;
     }
 }else{
-    echo '<script>
-            alert ("Formato de archovo NO valido.");
-            window.history.go(-1);
-            </script>';
-            exit;
+    $destino = "assets/fotos_perfil/no_avatar.jpg";
 }
 
 $gen = md5(uniqid(mt_rand(), false));
-
-$fecha = date("d-m-Y H:i:s");//Y-m-d H:i:s fechas en DB
-$fechaNacimiento=date("Y-m-d",strtotime(str_replace('/', '-', htmlspecialchars($fechaNacimiento))));
+//America/Bogota
+date_default_timezone_set('America/Bogota');
+$fecha = date("Y-m-d H:i:s");//Y-m-d H:i:s fechas en DB
+$fechaNacimiento=date("Y-m-d",strtotime(str_replace('/', '-',$fechaNacimiento)));
 
 $nombre = trim($nombre);
 $nombre = htmlspecialchars($nombre);
@@ -140,12 +144,13 @@ if (mysqli_num_rows($verificar_correo) >0){
         
         require_once 'assets/plugins/PHPMailer/PHPMailerAutoload.php';
         $mail = new PHPMailer();
-		$mail->SMTPAuth = true;
+        $mail->SMTPAuth = true;
+        $mail->IsSMTP(); 
 		$mail->Host = 'mail.becaspnc.org';
 		$mail->Port = 25;
-		$mail->Username = 'info@becaspnc.org';
+		$mail->Username = 'info@becaspnc.org';//info@becaspnc.org
 		$mail->Password = 'b1?^r(ZU-Uhi';		
-		$mail->setFrom('info@becaspnc.org', 'BECASPNC');
+		$mail->setFrom('info@becaspnc.org', 'BECASPNC REGISTRO');
 		$mail->addAddress($correo, $nombre);		
 		$mail->Subject = $asunto;
 		$mail->Body    = $cuerpo;
@@ -154,7 +159,7 @@ if (mysqli_num_rows($verificar_correo) >0){
 
     if($mail->send()){
         
-         $insertar = "INSERT INTO perfil(token, nombre, apellido, segundoApellido, tipoDocumento, numeroDocumento, fechaNacimiento, genero, telefono, correo, contrasena, tipoUsuario, avatar, fechaIngreso) VALUES ('$gen', '$nombre', '$apellido', '$segundoApellido', '$tipoDocumento', '$numeroDocumento', '$fechaNacimiento', '$genero', '$telefono', '$correo', '$contrasena', '$tipoUsuario', '$destino', '$fotoFinal', '$fecha')";
+         $insertar = "INSERT INTO perfil(token, nombre, apellido, segundoApellido, tipoDocumento, numeroDocumento, fechaNacimiento, genero, telefono, correo, contrasena, tipoUsuario, avatar,fechaIngresoNew ,fechaIngreso) VALUES ('$gen', '$nombre', '$apellido', '$segundoApellido', '$tipoDocumento', '$numeroDocumento', '$fechaNacimiento', '$genero', '$telefono', '$correo', '$contrasena', '$tipoUsuario', '$destino', '$fecha','$fecha')";
 
     echo '<script>
     alert ("Se ha enviado un link a su correo para confirmar sus datos, revise la bandeja de correos no deseados o spam");
@@ -174,7 +179,7 @@ if (mysqli_num_rows($verificar_correo) >0){
 }else{
         echo '
         <script>
-        alert ("las contrase���as no coinciden");
+        alert ("las contraseñas no coinciden");
         window.history.go(-1);
         </script>';
         exit;

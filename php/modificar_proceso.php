@@ -42,6 +42,18 @@ $telefono = htmlspecialchars($telefono);
 $tipoUsuario = trim($tipoUsuario);
 $tipoUsuario = htmlspecialchars($tipoUsuario);
 
+//contraseñas
+$contrasena = password_hash($_POST["contrasena"], PASSWORD_DEFAULT);
+$contrasena2 = $_POST["contrasena2"];
+$request = 0;
+
+$contrasena = trim($contrasena);
+$contrasena = htmlspecialchars($contrasena);
+
+$contrasena2 = trim($contrasena2);
+$contrasena2 = htmlspecialchars($contrasena2);
+
+
 
 
 include "../conexionB-D.php";
@@ -51,9 +63,9 @@ $filas=mysqli_num_rows($resultado);
 $row = mysqli_fetch_array($resultado);
 
 
+// echo $nombre.$apellido.$segundoApellido.$tipoDocumento.$numeroDocumento.$fechaNacimiento.$genero.$telefono.$tipoUsuario;
 
-
-if(empty($nombre) || empty($apellido) || empty($segundoApellido) || empty($tipoDocumento) || empty($numeroDocumento) || empty($fechaNacimiento) || empty($genero)  || empty($telefono)  || empty($tipoUsuario)){
+if(empty($nombre) || empty($apellido) || empty($segundoApellido) || empty($tipoDocumento) || empty($numeroDocumento) || empty($fechaNacimiento) || empty($genero)  || empty($telefono) ){
     
      echo '
     <script>
@@ -77,7 +89,28 @@ $tipoUsuario = $_POST["tipo"];
     
 }else{
 
-$modificar = "UPDATE perfil SET nombre='$nombre', apellido='$apellido', segundoApellido='$segundoApellido', tipoDocumento='$tipoDocumento', numeroDocumento='$numeroDocumento', fechaNacimiento='$fechaNacimiento', genero='$genero', telefono='$telefono', tipoUsuario='$tipoUsuario' WHERE id_user='$id'";
+    if($_POST['contrasena'] == "" && $_POST['contrasena2'] == ""){
+
+        $modificar = "UPDATE perfil SET nombre='$nombre', apellido='$apellido', segundoApellido='$segundoApellido', tipoDocumento='$tipoDocumento', numeroDocumento='$numeroDocumento', fechaNacimiento='$fechaNacimiento', genero='$genero', telefono='$telefono', tipoUsuario='$tipoUsuario' WHERE id_user='$id'";
+    }else{
+
+        if($_POST['contrasena'] == $_POST['contrasena2']){
+        
+            echo '
+            <script>
+            alert ("las contraseñas no coinciden");
+            window.history.go(-1);
+            </script>';
+            exit;
+            
+            
+        }else{
+            //modifica contraseña
+            $modificar = "UPDATE perfil SET nombre='$nombre', apellido='$apellido', segundoApellido='$segundoApellido', tipoDocumento='$tipoDocumento', numeroDocumento='$numeroDocumento', fechaNacimiento='$fechaNacimiento', genero='$genero', telefono='$telefono', tipoUsuario='$tipoUsuario', contrasena='$contrasena' WHERE id_user='$id'";
+
+        }
+    }
+
            
 
     

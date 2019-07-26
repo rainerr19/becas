@@ -42,7 +42,7 @@ $mostrar=mysqli_fetch_array($resultado);
             <div class="card border-info mb-2">
                 
                 <div class="card-header text-white border-info mb-3" style="background-color: #022606">
-                    <h2>Edicion datos de usuario</h2>
+                    <h2>Edición de usuario</h2>
                 </div>
                <div class="card-body">
                    <form method="POST" action="modificar_proceso.php">
@@ -113,6 +113,15 @@ $mostrar=mysqli_fetch_array($resultado);
                             value="<?php echo date("Y-m-d",strtotime(str_replace('/', '-', htmlspecialchars($mostrar['fechaNacimiento'])))); ?>">
                                 
                                 
+                        </div>
+                        <label for="fechaNacimiento" class="col-form-label-lg">Cambio de contraseña</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input class="form-control form-control-lg" placeholder="contraseña nueva" name="contrasena" type="password">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input class="form-control form-control-lg" placeholder="repita la contraseña nueva" name="contrasena2" type="password" value="">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="tipo" class="col-form-label-lg">Seleccione un privilegio</label>

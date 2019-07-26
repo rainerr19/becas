@@ -1,6 +1,6 @@
 <?php
 include "../conexionB-D.php";
-require_once '../PHPMailer/PHPMailerAutoload.php';
+require_once '../assets/plugins/PHPMailer/PHPMailerAutoload.php';
 
 $correo = $_POST["correo"];
 $correo = trim($correo);
@@ -72,11 +72,7 @@ if($filas>0){
     </script>';
         exit;
     }
-    
-    
-    
-    
-    
+
     
 }else{
     echo '<script>

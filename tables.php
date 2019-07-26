@@ -74,32 +74,41 @@ if($_SESSION['validacion'] == 1){
         </div>
     </div>
     
+    <div class="modal fade" id="modal_delite" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">¿Eliminar usuario?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+          <form action="php/eliminar.php" method="post">
+            <input type="hidden" id="id_user" name="id" value="">
+            
+                <button type="submit" class="btn btn-danger"> Si </button>
+          </form>
+                <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <?php
     include 'partes/footer.php';
 
     ?>
     <script src="assets/js/dataTableUser.config.js"></script>
 
-                
-
     </body>
-<div class="modal fade" id="modal_delite" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">¿Eliminar usuario?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-            <button id="del_user" type="button" class="btn btn-danger"> Si </button>
-            <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
     </html>
+    <script>
+    function del(id) {
+        $('#modal_delite').modal('show')
+        $('#id_user').val(id);
+    }
+    </script>      
+
     <?php
   }else{
       header("location:login.php");
